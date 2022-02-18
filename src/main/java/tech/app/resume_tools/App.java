@@ -4,7 +4,13 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Hello world!
+ * ~~UNDER CONSTRUCTION DOES NOT WORK~~
+ * Program designed to take user input of 2 files containing text, comparing
+ * common words, their use counts, and possible errors. Additionally, code
+ * could be implemented to provide intelligent feedback to the user. App will
+ * likely be added to the website for remote access and a prettier GUI.
+ * 
+ * @Author Griffin Pitts
  */
 public final class App {
 
