@@ -54,9 +54,9 @@ public final class App {
      *            string
      * @param position
      *            the starting index
-     * @param separators
+     * @param SEPARATORS
      *            the {@code Set} of separator characters
-     * @return the first word or separator string found in {@code text} starting
+     * @return the first word or an empty string found in {@code text} starting
      *         at index {@code position}
      * @requires 0 <= position < |text|
      * @ensures <pre>
@@ -69,23 +69,21 @@ public final class App {
      *    entries(text[position, position + |nextWordOrSeparator| + 1))
      *      intersection separators /= {})
      * else
-     *   entries(nextWordOrSeparator) is subset of separators  and
-     *   (position + |nextWordOrSeparator| = |text|  or
-     *    entries(text[position, position + |nextWordOrSeparator| + 1))
-     *      is not subset of separators)
+     *   entries(nextWordOrSeparator) is subset of separators and 
+     *   returns empty string.
      * </pre>
      */
     private static String nextWordOrSeparator(String str, int idx) {
-        StringBuilder sb = new StringBuilder();
-        char ch = str.charAt(idx);
-        int newPos = idx;
-
-        while(!SEPARATORS.contains(ch)) {
-            sb.append(ch);
-            newPos++;
-            ch = str.charAt(newPos);
+        String sb = "";
+        if(idx <= str.length() - 1) {
+            char ch = str.charAt(idx);
+            if(!SEPARATORS.contains(ch)) {
+                sb = Character.toString(ch);
+                idx++;
+                sb = sb + nextWordOrSeparator(str, idx);
+            }
         }
-            return sb.toString();
+        return sb;
     }
 
     /**
@@ -99,15 +97,21 @@ public final class App {
         //String fName = sc.nextLine();
 
         
-        String st = "jnasdnasdkjnasdkjnasd  asd 213 $$$%%% lep";
-        int index = st.length();
-
-        String newStr = nextWordOrSeparator(st, index);
-        while(newStr.length() < index) {
-            
+        String st = " jnasdnasdkjnasdkjnasd  asd 213 $$$%%% lep";
+        int stLen = st.length();
+        int index = 0;
+      
+        System.out.println("St length: " + stLen);
+        while(index < stLen + 10) {
+            String returnedStr = nextWordOrSeparator(st, index);
+            System.out.println("returnedStr->" + returnedStr + "<-");
+            if(returnedStr.isEmpty()) {
+                index++;
+            } 
+            index = index + returnedStr.length();
+            System.out.println(index);
         }
-        System.out.println(nextWordOrSeparator("jnasdnasdkjnasdkjnasd  asd 213 $$$%%% lep", index));
-        System.out.println(index);
+        
 
         //try {
         //    File inFile = new File(fName);
