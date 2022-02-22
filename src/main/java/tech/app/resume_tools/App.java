@@ -3,6 +3,13 @@ package tech.app.resume_tools;
 import java.io.*;
 import java.util.*;
 
+import java.io.File; 
+import java.io.IOException; 
+import org.apache.pdfbox.pdmodel.PDDocument; 
+import org.apache.pdfbox.text.PDFTextStripper; 
+import org.apache.pdfbox.text.PDFTextStripperByArea;
+
+
 /**
  * ~~UNDER CONSTRUCTION DOES NOT WORK~~
  * Program designed to take user input of 2 files containing text, comparing
@@ -121,12 +128,10 @@ public final class App {
     public static void main(String[] args) {
         generateElements(SEP_STR, SEPARATORS);
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a file: ");
+        System.out.print("Enter a file: ");
         String fName = sc.nextLine();
         List<String> list = siftFileArray(fName);
         System.out.println(list.toString());
-
-
 
         sc.close();
   
