@@ -88,10 +88,8 @@ public final class App {
     
     private static List<String> siftFileArray(String path) {
         List<String> words = new ArrayList<>();
-        BufferedReader br = null;
-        try {
-            File inFile = new File(path);
-            br = new BufferedReader(new FileReader(inFile));
+        File inFile = new File(path);
+        try (BufferedReader br = new BufferedReader(new FileReader(inFile))) {
             String line = br.readLine();
             Boolean lineAtEOF = (line == null);
             int lineLen = 0;
@@ -109,20 +107,10 @@ public final class App {
                 }
                 line = br.readLine();
                 lineAtEOF = (line == null);
-            }
-
-            
-
+            }            
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
-
         return words;
     }
 
