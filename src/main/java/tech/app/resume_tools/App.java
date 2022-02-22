@@ -85,6 +85,46 @@ public final class App {
         }
         return sb;
     }
+    
+    private static List<String> siftFileArray(String path) {
+        List<String> words = new ArrayList<>();
+        BufferedReader br = null;
+        try {
+            File inFile = new File(path);
+            br = new BufferedReader(new FileReader(inFile));
+            String line = br.readLine();
+            Boolean lineAtEOF = (line == null);
+            int lineLen = 0;
+            while(Boolean.FALSE.equals(lineAtEOF)) {
+                lineLen = line.length();
+                int idx = 0;
+                while(idx <= lineLen) {
+                    String word = nextWordOrSeparator(line, idx);
+                    if(!word.isBlank()) {
+                        words.add(word);
+                        idx += word.length();
+                    } else {
+                        idx++;
+                    }
+                }
+                line = br.readLine();
+                lineAtEOF = (line == null);
+            }
+
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return words;
+    }
 
     /**
      * Says hello to the world.
@@ -92,34 +132,15 @@ public final class App {
      */
     public static void main(String[] args) {
         generateElements(SEP_STR, SEPARATORS);
-        //Scanner sc = new Scanner(System.in);
-        //System.out.println("Enter a file: ");
-        //String fName = sc.nextLine();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a file: ");
+        String fName = sc.nextLine();
+        List<String> list = siftFileArray(fName);
+        System.out.println(list.toString());
 
-        
-        String st = " jnasdnasdkjnasdkjnasd  asd 213 $$$%%% lep";
-        int stLen = st.length();
-        int index = 0;
-      
-        System.out.println("St length: " + stLen);
-        while(index < stLen + 10) {
-            String returnedStr = nextWordOrSeparator(st, index);
-            System.out.println("returnedStr->" + returnedStr + "<-");
-            if(returnedStr.isEmpty()) {
-                index++;
-            } 
-            index = index + returnedStr.length();
-            System.out.println(index);
-        }
-        
 
-        //try {
-        //    File inFile = new File(fName);
-        //    BufferedReader br = new BufferedReader(new FileReader(inFile));
-        //    br.close();
 
-        //} catch (Exception e) {
-        //    System.err.println("Whoops");
-        //}
+        sc.close();
+  
     }
 }
