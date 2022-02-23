@@ -24,7 +24,7 @@ public final class App {
     private App() {
     }
 
-    private static final String SEP_STR = " /-+=,&%^$#!.?<>()[]{}|@*`~:;";
+    private static final String SEP_STR = " /-+=,&%^$#!.??<>()[]{}|@*`~:;";
     private static final Set<Character> SEPARATORS = new HashSet();
 
     /**
@@ -84,7 +84,8 @@ public final class App {
         String sb = "";
         if(idx <= str.length() - 1) {
             char ch = str.charAt(idx);
-            if(!SEPARATORS.contains(ch)) {
+            int chValue = ch;
+            if(isInRange(chValue)) {
                 sb = Character.toString(ch);
                 idx++;
                 sb = sb + nextWordOrSeparator(str, idx);
@@ -121,6 +122,48 @@ public final class App {
         return words;
     }
 
+    private static boolean isInRange(int num) {
+        boolean result = false;
+        if((num >=48 && num <=57)) {
+            result = true;
+        } else if(num >= 65 && num <= 90) {
+            result = true;
+        } else if (num >= 97 && num <= 122) {
+            result = true;
+        } else if (num == 39) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    // A:\\repos\\resume_tools\\data\\griffin_pitts_resume_1.pdf
+    private static List<String> siftPDFFileArray(String path) {
+        List<String> words = new ArrayList<>();
+        try ( PDDocument document = PDDocument.load(new File(path))) {
+            if (!document.isEncrypted()) {
+                PDFTextStripper stripper = new PDFTextStripper();
+                String text = stripper.getText(document);
+                int idx = 0;
+                int textLen = text.length();
+                while(idx <= textLen) {
+                    String word = nextWordOrSeparator(text, idx);
+                    //System.out.println("Word is->" + word + "<-");
+                    if(!word.isBlank()) {
+                        words.add(word);
+                        idx += word.length();
+                    } else {
+                        idx++;
+                    }
+                }
+            }            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return words;
+    }
+
+
     /**
      * Says hello to the world.
      * @param args The arguments of the program.
@@ -130,7 +173,7 @@ public final class App {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter a file: ");
         String fName = sc.nextLine();
-        List<String> list = siftFileArray(fName);
+        List<String> list = siftPDFFileArray(fName);
         System.out.println(list.toString());
 
         sc.close();
