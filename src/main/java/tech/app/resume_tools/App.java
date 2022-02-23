@@ -137,7 +137,7 @@ public final class App {
         return result;
     }
 
-    // A:\\repos\\resume_tools\\data\\griffin_pitts_resume_1.pdf
+    // A:\repos\resume_tools\data\griffin_pitts_resume_1.pdf
     private static List<String> siftPDFFileArray(String path) {
         List<String> words = new ArrayList<>();
         try ( PDDocument document = PDDocument.load(new File(path))) {
@@ -148,7 +148,6 @@ public final class App {
                 int textLen = text.length();
                 while(idx <= textLen) {
                     String word = nextWordOrSeparator(text, idx);
-                    //System.out.println("Word is->" + word + "<-");
                     if(!word.isBlank()) {
                         words.add(word);
                         idx += word.length();
@@ -173,7 +172,15 @@ public final class App {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter a file: ");
         String fName = sc.nextLine();
-        List<String> list = siftPDFFileArray(fName);
+    
+        List<String> list = new ArrayList<>();
+        
+        if(fName.contains(".pdf")) {
+            list = siftPDFFileArray(fName);
+        } else {
+            list = siftFileArray(fName);
+        }
+        
         System.out.println(list.toString());
 
         sc.close();
