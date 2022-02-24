@@ -137,7 +137,8 @@ public final class App {
         return result;
     }
 
-    // A:\repos\resume_tools\data\griffin_pitts_resume_1.pdf
+    // PC: A:\repos\resume_tools\data\griffin_pitts_resume_1.pdf
+    // MAC: /Users/gpitts79/Documents/repos/resume_tools/data/griffin_pitts_resume_1.pdf
     private static List<String> siftPDFFileArray(String path) {
         List<String> words = new ArrayList<>();
         try ( PDDocument document = PDDocument.load(new File(path))) {
@@ -154,13 +155,42 @@ public final class App {
                     } else {
                         idx++;
                     }
-                }
+                }   
             }            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return words;
     }
+
+    /**
+     * Sorting arraylist using the built-in collections sorting method.
+     * This method assumes all objects are comparable, and sorts the 
+     * resulting array in natural order. The natural order is __, and
+     * the sorting algorithm used is a version of MergeSort called 
+     * Timsort, and ensures stable sorting. This is achieved by adding
+     * already sorted "runs" of data to separate stacks, then merging
+     * these stacks together once all data has been processed. These
+     * runs have a minimum size, and runs < min_size are filled using 
+     * insertion sort for efficiency. 
+     * 
+     * In this implementation, the default comparator (<) is used.
+     * 
+     * References can be found here:
+     * https://en.wikipedia.org/wiki/Timsort
+     * 
+     * Run time best case: O(n)
+     * Run time worst case: O(nlogn)
+     * Average: O(nlogn)
+     * 
+     * @param list
+     *            An un-ordered collection of Strings to be sorted
+     */           
+    private static void stdSortList(List<String> list) {
+        Collections.sort(list);
+    }
+
+
 
 
     /**
@@ -180,7 +210,7 @@ public final class App {
         } else {
             list = siftFileArray(fName);
         }
-        
+        stdSortList(list);
         System.out.println(list.toString());
 
         sc.close();
