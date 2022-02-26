@@ -191,6 +191,18 @@ public final class App {
     }
 
 
+    /**
+     * Implementing block sort first 'cause Cameron picked it from the list of 
+     * sorting algos on wikipedia.
+     * 
+     * 
+     * @param list
+     */
+    private static void blockSortArray(List<String> list) {
+        // doing research brb
+    }
+
+
 
 
     /**
@@ -200,6 +212,7 @@ public final class App {
     public static void main(String[] args) {
         generateElements(SEP_STR, SEPARATORS);
         Scanner sc = new Scanner(System.in);
+        /**
         System.out.print("Enter a file: ");
         String fName = sc.nextLine();
     
@@ -211,7 +224,8 @@ public final class App {
             list = siftFileArray(fName);
         }
         stdSortList(list);
-        System.out.println(list.toString());
+        System.out.println(list.toString())
+        */
 
         sc.close();
   
